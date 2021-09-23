@@ -1,10 +1,12 @@
 let snakey;
 let food;
+let score;
 
 function setup() {
   createCanvas(300, 300);
   snakey = new Snake();
   food = new Food();
+  score = new Score();
 }
 
 function draw() {
@@ -13,14 +15,26 @@ function draw() {
   snakey.move()
   snakey.show()
   food.show()
+  score.show()
   if (snakey.eat(food.x, food.y)) {
     newLocation()
+    score.val += 5
+  }
+}
+
+function Score() {
+  this.val = 0
+
+  this.show = function() {
+    fill('black')
+    textSize(20);
+    text('Score: ' + this.val, width - 100, height - 10);
   }
 }
 
 function Food() {
-  this.x = random(width)
-  this.y = random(height)
+  this.x = random(10, width - 10)
+  this.y = random(10, height - 10) 
   
   this.show = function() {
     fill('red')
@@ -29,8 +43,8 @@ function Food() {
 }
 
 function newLocation() {
-  food.x = random(width)
-  food.y = random(height)
+  food.x = random(10, width - 10)
+  food.y = random(10, height - 10)
 }
 
 function Snake() {
@@ -49,7 +63,7 @@ function Snake() {
   
   this.show = function() {
     fill('lightgreen')
-    circle(this.x, this.y, 10)
+    circle(this.x, this.y, 12)
   }
   
   this.setDir = function(x, y) {
@@ -59,7 +73,7 @@ function Snake() {
   
   this.eat = function(x, y) {
     var d = dist(this.x, this.y, x, y)
-    if (d < 3) {
+    if (d < 5) {
       return true
     } else {
       return false
