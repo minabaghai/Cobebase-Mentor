@@ -2,6 +2,7 @@ let snakey;
 let food;
 let score;
 
+
 function setup() {
   createCanvas(300, 300);
   snakey = new Snake();
@@ -52,8 +53,19 @@ function Snake() {
   this.y = 10;
   this.xspeed = 1;
   this.yspeed = 0;
+  this.length = 0;
+  this.tail = []
   
   this.move = function() {
+    // for adding to snake, need to put new circle in place of current circle (the "head"),
+    // and shift everything else in the tail over by 1. Only need this when haven't eaten food.
+    if (this.tail.length === this.length) {
+      for (var i = 0; i < this.tail.length - 1; i += 1) {
+        this.tail[i] = this.tail[i + 1]
+      }
+    }
+    this.tail[this.length - 1] = createVector(this.x, this.y)
+    
     this.x += this.xspeed;
     this.y += this.yspeed;
     
@@ -63,6 +75,9 @@ function Snake() {
   
   this.show = function() {
     fill('lightgreen')
+    for (var i = 0; i < this.length; i += 1) {
+      circle(this.tail[i].x, this.tail[i].y, 12)
+    }
     circle(this.x, this.y, 12)
   }
   
@@ -74,6 +89,7 @@ function Snake() {
   this.eat = function(x, y) {
     var d = dist(this.x, this.y, x, y)
     if (d < 5) {
+      this.length += 1
       return true
     } else {
       return false
