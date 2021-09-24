@@ -1,7 +1,7 @@
 let snakey;
 let food;
 let score;
-let diff = 2;
+let diff = 3;
 
 
 function setup() {
@@ -13,7 +13,8 @@ function setup() {
 
 function draw() {
   background(200);
-  background("lightblue");
+  background("black");
+  noStroke();
   snakey.move()
   snakey.show()
   food.show()
@@ -28,7 +29,7 @@ function Score() {
   this.val = 0
 
   this.show = function() {
-    fill('black')
+    fill('white')
     textSize(20);
     text('Score: ' + this.val, width - 100, height - 10);
   }
@@ -39,7 +40,7 @@ function Food() {
   this.y = random(10, height - 10) 
   
   this.show = function() {
-    fill('red')
+    fill('lightblue')
     circle(this.x, this.y, 10)
   }
 }
@@ -52,7 +53,7 @@ function newLocation() {
 function Snake() {
   this.x = 10;
   this.y = 10;
-  this.xspeed = 2;
+  this.xspeed = 3;
   this.yspeed = 0;
   this.length = 0;
   this.tail = []
