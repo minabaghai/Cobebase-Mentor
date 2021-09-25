@@ -1,7 +1,7 @@
 let snakey;
 let food;
 let score;
-let diff = 3;
+let diff = 4;
 
 
 function setup() {
@@ -12,9 +12,9 @@ function setup() {
 }
 
 function draw() {
-  background(200);
-  background("black");
-  noStroke();
+  background(200)
+  background("black")
+  noStroke()
   snakey.move()
   snakey.show()
   food.show()
@@ -22,6 +22,17 @@ function draw() {
   if (snakey.eat(food.x, food.y)) {
     newLocation()
     score.val += 5
+  }
+  if(snakey.isGameOver()) {
+    fill('red')
+    rect(1, 1, width, height)
+    fill('black')
+    textSize(30)
+    textAlign(CENTER)
+    text('GAME OVER!', width/2, height/2)
+    textSize(20)
+    text('Final Score: ' + score.val, width/2, height - height/2.5)
+    noLoop()
   }
 }
 
@@ -31,7 +42,7 @@ function Score() {
   this.show = function() {
     fill('white')
     textSize(20);
-    text('Score: ' + this.val, width - 100, height - 10);
+    text('SCORE: ' + this.val, width - 100, height - 10);
   }
 }
 
@@ -57,6 +68,16 @@ function Snake() {
   this.yspeed = 0;
   this.length = 0;
   this.tail = []
+
+  this.isGameOver = function() {
+    for (var i = 0; i < this.tail.length; i += 1) {
+      var d = dist(this.x, this.y, this.tail[i].x, this.tail[i].y)
+      if (d < 1) {
+        return true
+      }
+    }
+    return false
+  }
   
   this.move = function() {
     // for adding to snake, need to put new circle in place of current circle (the "head"),
@@ -81,6 +102,7 @@ function Snake() {
     }
     circle(this.x, this.y, 12)
   }
+
   
   this.setDir = function(x, y) {
     this.xspeed = x;
