@@ -42,7 +42,8 @@ function Score() {
   this.show = function() {
     fill('white')
     textSize(20);
-    text('SCORE: ' + this.val, width - 100, height - 10);
+    textAlign(RIGHT)
+    text('SCORE: ' + this.val, width - 10, height - 10);
   }
 }
 
