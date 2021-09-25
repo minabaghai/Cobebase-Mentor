@@ -2,10 +2,11 @@ let snakey;
 let food;
 let score;
 let diff = 4;
+let scorediff = 25
 
 
 function setup() {
-  createCanvas(300, 300);
+  createCanvas(300, 300 + scorediff);
   snakey = new Snake();
   food = new Food();
   score = new Score();
@@ -25,7 +26,7 @@ function draw() {
   }
   if(snakey.isGameOver()) {
     fill('red')
-    rect(1, 1, width, height)
+    rect(0, 0, width, height)
     fill('black')
     textSize(30)
     textAlign(CENTER)
@@ -40,16 +41,18 @@ function Score() {
   this.val = 0
 
   this.show = function() {
+    fill('lightpink')
+    rect(0, 300, width, 50)
     fill('white')
     textSize(20);
     textAlign(RIGHT)
-    text('SCORE: ' + this.val, width - 10, height - 10);
+    text('SCORE: ' + this.val, width - 10, height - 5);
   }
 }
 
 function Food() {
   this.x = random(10, width - 10)
-  this.y = random(10, height - 10) 
+  this.y = random(10, height - 10 - scorediff) 
   
   this.show = function() {
     fill('lightblue')
@@ -59,13 +62,13 @@ function Food() {
 
 function newLocation() {
   food.x = random(10, width - 10)
-  food.y = random(10, height - 10)
+  food.y = random(10, height - 10 - scorediff)
 }
 
 function Snake() {
   this.x = 10;
   this.y = 10;
-  this.xspeed = 3;
+  this.xspeed = 4;
   this.yspeed = 0;
   this.length = 0;
   this.tail = []
@@ -92,7 +95,7 @@ function Snake() {
     this.y += this.yspeed;
     
     this.x = constrain(this.x, 5, width - 5)
-    this.y = constrain(this.y, 5, height - 5)
+    this.y = constrain(this.y, 5, height - 5 - scorediff)
   }
   
   this.show = function() {
